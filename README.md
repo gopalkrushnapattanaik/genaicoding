@@ -119,6 +119,48 @@ async with client:
 
 ---
 
+## RAG (Retrieval-Augmented Generation) Example
+
+### 1. Create Embeddings and Vector Store
+```python
+from langchain_openai import OpenAIEmbeddings
+from langchain.vectorstores import FAISS
+from langchain.docstore.document import Document
+
+# Sample documents
+docs = [Document(page_content="LangChain is awesome!"), Document(page_content="GenAI coding rocks!")]
+
+# Create embeddings
+embeddings = OpenAIEmbeddings()
+
+# Create vector store
+vectorstore = FAISS.from_documents(docs, embeddings)
+```
+
+### 2. Create a Retriever
+```python
+retriever = vectorstore.as_retriever()
+```
+
+### 3. Use Retriever with LLM (RAG Pipeline)
+```python
+from langchain.chains import RetrievalQA
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(model="gpt-4o-mini")
+qa_chain = RetrievalQA.from_chain_type(
+    llm=llm,
+    retriever=retriever,
+    return_source_documents=True
+)
+
+query = "What is LangChain?"
+result = qa_chain(query)
+print(result["result"])
+```
+
+---
+
 ## Security & Best Practices
 - **Never commit `.env` files with real API keys.**
 - Use `.env.example` for sharing config templates.
