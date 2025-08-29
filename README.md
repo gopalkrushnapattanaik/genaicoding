@@ -70,6 +70,55 @@ This repository is a comprehensive starting point for hands-on training in Gener
 
 ---
 
+## Basic Code Examples
+
+### 1. Creating an MCP Server (Google Maps Example)
+```powershell
+$env:GOOGLE_MAPS_API_KEY='your-key'; npx -y @modelcontextprotocol/server-google-maps
+```
+
+### 2. Creating an OpenAI LLM (LangChain)
+```python
+from langchain_openai import ChatOpenAI
+llm = ChatOpenAI(model="gpt-4o-mini")
+```
+
+### 3. Creating a Tool for Agents
+```python
+from langchain.tools import tool
+
+@tool
+def get_weather(city: str) -> str:
+    """Fetch weather for a city using MCP server."""
+    # ...call MCP server and return weather...
+```
+
+### 4. Using an Agent with LLM and Tools
+```python
+from langchain.agents import initialize_agent, AgentType
+agent = initialize_agent([get_weather], llm, agent=AgentType.OPENAI_MULTI_FUNCTIONS)
+result = agent.run("What's the weather in Bangalore?")
+print(result)
+```
+
+### 5. Example: List GitHub Commits via MCP
+```python
+from fastmcp.client.transports import StdioTransport
+from fastmcp import Client
+import os
+transport = StdioTransport(
+    command="npx",
+    args=["-y", "@modelcontextprotocol/server-github"],
+    env={"GITHUB_PERSONAL_ACCESS_TOKEN": os.getenv("GITHUB_PERSONAL_ACCESS_TOKEN")},
+)
+client = Client(transport)
+async with client:
+    result = await client.call_tool("list_commits", {"owner": "octocat", "repo": "Hello-World"})
+    print(result.content)
+```
+
+---
+
 ## Security & Best Practices
 - **Never commit `.env` files with real API keys.**
 - Use `.env.example` for sharing config templates.
