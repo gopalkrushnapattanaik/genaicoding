@@ -161,6 +161,44 @@ print(result["result"])
 
 ---
 
+# LangChain + Ollama
+
+## Overview
+The `langchain-ollama` folder contains Jupyter notebooks and Python scripts for hands-on GenAI labs using locally running Ollama models. All concepts from the original LangChain labs are covered, including prompt engineering, RAG, agent tools, and API integration—adapted for Ollama.
+
+## Key Concepts & Labs
+- **Environment Setup:** Install dependencies, pull Ollama models, configure `.env`.
+- **Basic Prompting:** Send prompts to local LLMs and print responses.
+- **Prompt Templates:** Format prompts for creative tasks (e.g., poetry).
+- **RAG:** Load and chunk PDFs, answer questions using document context.
+- **Agent Tools & APIs:** Use prompt engineering to interact with external APIs (Google Search, Slack, Weather).
+
+## How to Use
+1. Open any notebook in `langchain-ollama/` (e.g., `1. Langchain_Basics.ipynb`).
+2. Run each cell block-by-block in Jupyter for interactive learning.
+3. See `instructions.ipynb` for a summary and sample code for all major concepts.
+
+## Sample Ollama Usage
+```python
+import ollama
+response = ollama.chat(model="llama2", messages=[{"role": "user", "content": "What is the capital of France?"}])
+print(response["message"]["content"])
+```
+
+## Notebooks
+- `1. Langchain_Basics.ipynb`: Getting started, basic prompts
+- `2. Langchain_Temperatures.ipynb`: Temperature effects
+- `3. Langchain_Prompt_Template.ipynb`: Prompt templates
+- `4. Langchain_Agent_Tools_Weather.ipynb`: Weather agent tools
+- `5. Langchain_Rag.ipynb`: RAG concepts
+- `6. Resume_RAG_Agent_Lab.ipynb`: Resume RAG agent
+- `8. Project1 - Connecting_AI_agents_to_external_APIs_(Google_Search).ipynb`: API integration
+- `9. Project2 - weather_to_slack_agent.ipynb`: Slack agent
+- `instructions.ipynb`: Concepts & sample code
+
+---
+For more details, see the individual notebooks and scripts in `langchain-ollama/`.
+
 ## Security & Best Practices
 - **Never commit `.env` files with real API keys.**
 - Use `.env.example` for sharing config templates.
